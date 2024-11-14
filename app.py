@@ -25,7 +25,7 @@ dictConfig({
         'handlers': ['wsgi']
     }
 })
-app = Flask(_name_)
+app = Flask(__name__)
 CORS(app)
 # My SQL Instance configurations
 # Change the HOST IP and Password to match your instance configurations
@@ -53,7 +53,7 @@ def add():
     return render_template('add.html')
 
   return '{"Result":"Success"}'
-  
+
 @app.route("/index.html") #Default - Show Data
 def index(): # Name of the method
   return render_template('index.html')
