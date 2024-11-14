@@ -77,5 +77,5 @@ def hello(): # Name of the method
     mimetype='application/json'
   )
   return ret #Return the data in a string format
-if _name_ == "_main_":
+if __name__ == "_main_":
   app.run(host='0.0.0.0',port='8080', ssl_context=('cert.pem', 'privkey.pem')) #Run the flask app at port 8080
