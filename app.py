@@ -55,8 +55,8 @@ def add():
   return '{"Result":"Success"}'
 
 @app.route("/index.html") #Default - Show Data
-def index(): # Name of the method
-  return render_template('index.html')
+def index():  # Name of the method
+  return render_template('add.html') 
 
 @app.route("/") #Default - Show Data
 def hello(): # Name of the method
@@ -77,5 +77,5 @@ def hello(): # Name of the method
     mimetype='application/json'
   )
   return ret #Return the data in a string format
-if __name__ == "_main_":
+if __name__ == "__main__":
   app.run(host='0.0.0.0',port='8080', ssl_context=('cert.pem', 'privkey.pem')) #Run the flask app at port 8080
