@@ -53,6 +53,11 @@ def add():
     return render_template('add.html')
 
   return '{"Result":"Success"}'
+
+@app.route("/index.html") #Default - Show Data
+def index():  # Name of the method
+  return render_template('add.html') 
+
 @app.route("/") #Default - Show Data
 def hello(): # Name of the method
   cur = mysql.cursor() #create a connection to the SQL instance
