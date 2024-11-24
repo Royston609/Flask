@@ -5,7 +5,7 @@ import pandas as pd
 app = Flask(__name__)
 
 # MySQL Database Configuration
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:Royston@2000@localhost:3306/property_price'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:Royston@2000\@localhost:3306/property_price'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
