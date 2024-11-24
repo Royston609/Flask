@@ -1,7 +1,6 @@
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 import pandas as pd
-from flask_ngrok import run_with_ngrok
 
 app = Flask(__name__)
 
@@ -52,8 +51,6 @@ def get_data():
 def ping():
     return jsonify({"message": "Server is running!"}), 200
 
-# Start Flask with ngrok
-run_with_ngrok(app)  # This will create a public URL
-
+# Start Flask app without ngrok (bind to 0.0.0.0 to make it externally accessible if running on a VM)
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True, host='0.0.0.0', port=5000)  # Accessible from external IP if VM-based
