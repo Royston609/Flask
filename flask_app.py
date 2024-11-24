@@ -17,7 +17,7 @@ class Data(db.Model):
     column2 = db.Column(db.Float, nullable=False)
 
 # Create table in the database
-@app.before_first_request
+@app.before_request
 def create_tables():
     db.create_all()
 
