@@ -167,7 +167,7 @@ app = Flask(__name__)
 CORS(app)
 
 # Connect to MySQL
-conn = mysql.connector.connect(user='root', password='new_password', host='localhost', database='property_price')
+conn = mysql.connector.connect(user='web', password='webPass', host='localhost', database='property_price')
 cursor = conn.cursor()
 
 @app.route("/get", methods=['GET'])
