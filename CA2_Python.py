@@ -308,7 +308,7 @@ CORS(app)
 
 @app.route("/get", methods=['GET'])  # Get Property Data
 def get_property_data():
-    cursor.execute("SELECT * FROM property_price_normal")
+    cursor.execute("SELECT * FROM property_price")
     rows = cursor.fetchall()
     rows
     # Prepare results to return as JSON
@@ -331,7 +331,7 @@ def get_property_data():
 
     # Insert the fetched data into a new table (example: property_price_inserted)
     cursor.executemany('''
-        INSERT INTO property_price_inserted (
+        INSERT INTO property_price (
             DisplayAddress, GroupPhoneNumber, SizeStringMeters, GroupEmail, CreatedOnDate,
             NumberOfBeds, PriceChangeIsIncrease, PropertyType, NumberOfBathrooms,
             PhotoCount, Dublin_Info, PriceAsString
