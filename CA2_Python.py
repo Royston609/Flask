@@ -2,7 +2,6 @@ import requests
 import json
 import pandas as pd
 import matplotlib.pyplot as plt
-# from geopy.geocoders import Nominatim
 
 url = 'https://api.myhome.ie/search'
 res = []
@@ -158,10 +157,6 @@ dublin_info_for_blank = blank_entries['Dublin_Info']
 # CHecking data for one of the Dublin area
 dublin_11 = df[df['Dublin_Info'] == 'Dublin 11']['SizeStringMeters']
 
-# Display the values
-print("SizeStringMeters values for Dublin 11:")
-print(dublin_11)
-
 # First, group by 'NumberOfBeds' and calculate the mean of 'SizeStringMeters' for each group
 mean_size_by_beds = df.groupby('NumberOfBeds')['SizeStringMeters'].mean()
 
@@ -175,8 +170,6 @@ blank_entries = df[df['SizeStringMeters'].isnull()]
 
 # Extracting rows where 'PriceAsString' contains 'week'
 weekly_entries = df[df['PriceAsString'].str.contains('week', case=False, na=False)]
-
-len(weekly_entries['PriceAsString'])
 
 # Converting weekly rent to monthly
 
