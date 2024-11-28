@@ -343,10 +343,10 @@ import sqlite3
 import json
 from flask import Flask, jsonify
 import mysql.connector
-conn = mysql.connector.connect(user='web', password='webPass',
-  host='127.0.0.1',
-  database='student')
 
+conn = mysql.connector.connect(user='web', password='webPass',
+                               host='127.0.0.1', database='property_price')
+cursor = conn.cursor()
 from logging.config import dictConfig
 
 dictConfig({
