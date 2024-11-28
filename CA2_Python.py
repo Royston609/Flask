@@ -2,7 +2,7 @@ import requests
 import json
 import pandas as pd
 import matplotlib.pyplot as plt
-from geopy.geocoders import Nominatim
+# from geopy.geocoders import Nominatim
 
 url = 'https://api.myhome.ie/search'
 res = []
