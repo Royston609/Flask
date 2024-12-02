@@ -140,8 +140,8 @@ price_summary = df.groupby('Dublin_Info')['Price'].agg(['mean', 'min', 'max', 'c
 
 # Removing columns with too many missing values
 missing_values = df.isnull().mean()
-columns_to_drop = missing_values[(missing_values > 0.1)].index.tolist()
-df = df.loc[:, (missing_values <= 0.1)]
+columns_to_drop = missing_values[(missing_values > 0.5)].index.tolist()
+df = df.loc[:, (missing_values <= 0.5)]
 
 # Select relevant columns
 columns_to_keep = [
@@ -154,14 +154,6 @@ df_final = df[columns_to_keep]
 # Convert 'CreatedOnDate' to string and clean it
 df_final['CreatedOnDate'] = df_final['CreatedOnDate'].astype(str)
 df_final['CreatedOnDate'] = df_final['CreatedOnDate'].apply(lambda x: x.split('T')[0] if 'T' in x else x)
-
-# Flask app to serve data
-dictConfig({
-    'version': 1,
-    'formatters': {'default': {'format': '[%(asctime)s] %(levelname)s in %(module)s: %(message)s'}},
-    'handlers': {'wsgi': {'class': 'logging.StreamHandler', 'stream': 'ext://flask.logging.wsgi_errors_stream', 'formatter': 'default'}},
-    'root': {'level': 'INFO', 'handlers': ['wsgi']},
-})
 
 app = Flask(__name__)
 CORS(app)
