@@ -145,8 +145,8 @@ price_summary = df.groupby('Dublin_Info')['Price'].agg(['mean', 'min', 'max', 'c
 
 # Removing columns with too many missing values
 missing_values = df.isnull().mean()
-columns_to_drop = missing_values[(missing_values > 0)].index.tolist()
-df = df.loc[:, (missing_values <= 0)]
+columns_to_drop = missing_values[(missing_values > 0.1)].index.tolist()
+df = df.loc[:, (missing_values <= 0.1)]
 
 # Select relevant columns
 columns_to_keep = [
