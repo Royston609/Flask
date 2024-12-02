@@ -162,7 +162,7 @@ df_final.loc[:, 'CreatedOnDate'] = df_final['CreatedOnDate'].apply(lambda x: x.s
 
 mysql = mysql.connector.connect(user='web', password='webPass',
   host='127.0.0.1',
-  database='Property_price')
+  database='property_price')
 
 from logging.config import dictConfig
 
