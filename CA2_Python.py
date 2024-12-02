@@ -151,7 +151,7 @@ df = df.loc[:, (missing_values <= 0)]
 # Select relevant columns
 columns_to_keep = [
     'DisplayAddress', 'GroupPhoneNumber', 'SizeStringMeters', 'GroupEmail', 'CreatedOnDate',
-    'NumberOfBeds', 'PriceChangeIsIncrease', 'NumberOfBathrooms',
+    'NumberOfBeds', 'PropertyType', 'PriceChangeIsIncrease', 'NumberOfBathrooms',
     'PhotoCount', 'Dublin_Info', 'PriceAsString'
 ]
 df_final = df[columns_to_keep]
@@ -203,7 +203,7 @@ def hello(): # Name of the method
             row['DisplayAddress'], row['GroupPhoneNumber'], row['SizeStringMeters'],
             row['GroupEmail'], row['CreatedOnDate'], row['NumberOfBeds'],
             row['PriceChangeIsIncrease'],
-            #  row['PropertyType'], 
+             row['PropertyType'], 
             row['NumberOfBathrooms'],
             row['PhotoCount'], row['Dublin_Info'], row['PriceAsString']
         )
@@ -221,11 +221,11 @@ def hello(): # Name of the method
             'CreatedOnDate': row[4],
             'NumberOfBeds': row[5],
             'PriceChangeIsIncrease': row[6],
-            # 'PropertyType': row[7],
-            'NumberOfBathrooms': row[7],
-            'PhotoCount': row[8],
-            'Dublin_Info': row[9],
-            'PriceAsString': row[10]
+            'PropertyType': row[7],
+            'NumberOfBathrooms': row[8],
+            'PhotoCount': row[9],
+            'Dublin_Info': row[10],
+            'PriceAsString': row[11]
         }
         results.append(result)
     response={'Results':result, 'count':len(result)}
