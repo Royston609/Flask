@@ -188,28 +188,28 @@ CORS(app)
 @app.route("/")  # Get Property Data
 def hello(): # Name of the method
     cur = mysql.cursor() #create a connection to the SQL instance
-    # Prepare the SQL Insert query
-    insert_query = """
-    INSERT INTO property_price (
-        DisplayAddress, GroupPhoneNumber, SizeStringMeters, GroupEmail, CreatedOnDate,
-        NumberOfBeds, PriceChangeIsIncrease, PropertyType, NumberOfBathrooms, PhotoCount,
-        Dublin_Info, PriceAsString
-    ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
-    """
+    # # Prepare the SQL Insert query
+    # insert_query = """
+    # INSERT INTO property_price (
+    #     DisplayAddress, GroupPhoneNumber, SizeStringMeters, GroupEmail, CreatedOnDate,
+    #     NumberOfBeds, PriceChangeIsIncrease, PropertyType, NumberOfBathrooms, PhotoCount,
+    #     Dublin_Info, PriceAsString
+    # ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+    # """
 
-    # Iterate through DataFrame rows and insert into the table
-    for index, row in df_final.iterrows():
-        data = (
-            row['DisplayAddress'], row['GroupPhoneNumber'], row['SizeStringMeters'],
-            row['GroupEmail'], row['CreatedOnDate'], row['NumberOfBeds'],
-            row['PriceChangeIsIncrease'],
-             row['PropertyType'], 
-            row['NumberOfBathrooms'],
-            row['PhotoCount'], row['Dublin_Info'], row['PriceAsString']
-        )
+    # # Iterate through DataFrame rows and insert into the table
+    # for index, row in df_final.iterrows():
+    #     data = (
+    #         row['DisplayAddress'], row['GroupPhoneNumber'], row['SizeStringMeters'],
+    #         row['GroupEmail'], row['CreatedOnDate'], row['NumberOfBeds'],
+    #         row['PriceChangeIsIncrease'],
+    #          row['PropertyType'], 
+    #         row['NumberOfBathrooms'],
+    #         row['PhotoCount'], row['Dublin_Info'], row['PriceAsString']
+    #     )
 
-        cur.execute(insert_query, data)
-    cur.execute("SELECT * FROM property_price") # execute an SQL statment
+        # cur.execute(insert_query, data)
+    ccur.execute('''SELECT * FROM property_price''') # execute an SQL statment
     rv = cur.fetchall() #Retreive all rows returend by the SQL statment
     Results=[]
     for row in rows:
