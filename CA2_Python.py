@@ -91,6 +91,9 @@ discarded_rows = df[df['Dublin_Info'].isna()]
 # Remove rows where Dublin_Info is None (keep only valid rows)
 df = df[df['Dublin_Info'].notna()]
 
+# Get the global mean of SizeStringMeters for the entire dataset
+global_mean_size = df['SizeStringMeters'].mean()
+
 # Cleaning and handling missing data for 'SizeStringMeters' and 'SizeStringFeet'
 for info in df['Dublin_Info'].unique():
     for bedrooms in df['NumberOfBeds'].unique():
@@ -99,13 +102,15 @@ for info in df['Dublin_Info'].unique():
 
         # Iterate over rows where SizeStringMeters is null
         for idx, row in df[(df['Dublin_Info'] == info) & (df['SizeStringMeters'].isnull())].iterrows():
-            if not pd.isnull(row['SizeStringFeet']):
+            if pd.notnull(row['SizeStringFeet']):
                 # If SizeStringFeet is not null, convert it to meters and fill SizeStringMeters
                 df.at[idx, 'SizeStringMeters'] = row['SizeStringFeet'] * 0.092903
+            elif pd.notnull(mean_size):
+                # If mean_size is available based on Dublin_Info and NumberOfBeds, use it
+                df.at[idx, 'SizeStringMeters'] = mean_size
             else:
-                # If SizeStringFeet is also null, use the mean size based on bedrooms and area
-                if not pd.isnull(mean_size):
-                    df.at[idx, 'SizeStringMeters'] = mean_size
+                # Fallback: If none of the above work, use the global mean size
+                df.at[idx, 'SizeStringMeters'] = global_mean_size
 
 # Replace blank sizes with mean apartment size based on Dublin area
 for info in df['Dublin_Info'].unique():
@@ -140,8 +145,8 @@ price_summary = df.groupby('Dublin_Info')['Price'].agg(['mean', 'min', 'max', 'c
 
 # Removing columns with too many missing values
 missing_values = df.isnull().mean()
-columns_to_drop = missing_values[(missing_values > 0.5)].index.tolist()
-df = df.loc[:, (missing_values <= 0.5)]
+columns_to_drop = missing_values[(missing_values > 0.1)].index.tolist()
+df = df.loc[:, (missing_values <= 0.1)]
 
 # Select relevant columns
 columns_to_keep = [
