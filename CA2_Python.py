@@ -203,7 +203,7 @@ def hello(): # Name of the method
     ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
     """
 
-    Iterate through DataFrame rows and insert into the table
+    # Iterate through DataFrame rows and insert into the table
     for index, row in df_final.iterrows():
         data = (
             row['DisplayAddress'], row['GroupPhoneNumber'], row['SizeStringMeters'],
