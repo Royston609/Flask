@@ -132,6 +132,12 @@ for index, row in weekly_entries.iterrows():
     # Update the 'PriceAsString' column with the new monthly price
     df.at[index, 'PriceAsString'] = f'€{monthly_price:,.2f} / month'
 
+# Group by 'NumberOfBeds' and get the most frequent 'PropertyType' for each group
+property_type_by_beds = df.groupby('NumberOfBeds')['PropertyType'].agg(lambda x: pd.Series.mode(x).iloc[0] if not x.empty else 'Unknown')
+
+# Ensure we are modifying the DataFrame in a safe manner
+df.loc[:, 'PropertyType'] = df['PropertyType'].fillna(df['NumberOfBeds'].map(property_type_by_beds))
+
 # Filter Dublin data (only areas 1 to 24)
 df = df[df['Dublin_Info'].str.startswith('Dublin ') & df['Dublin_Info'].str.split().str[1].astype(int).between(1, 24)]
 df['Price'] = pd.to_numeric(df['PriceAsString'].str.extract(r'([\d,\.]+)')[0].str.replace(',', '', regex=True), errors='coerce')
@@ -188,25 +194,23 @@ CORS(app)
 @app.route("/")  # Get Property Data
 def hello(): # Name of the method
     cur = mysql.cursor() #create a connection to the SQL instance
-    # # Prepare the SQL Insert query
-    # insert_query = """
-    # INSERT INTO property_price (
-    #     DisplayAddress, GroupPhoneNumber, SizeStringMeters, GroupEmail, CreatedOnDate,
-    #     NumberOfBeds, PriceChangeIsIncrease, PropertyType, NumberOfBathrooms, PhotoCount,
-    #     Dublin_Info, PriceAsString
-    # ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
-    # """
+    # Prepare the SQL Insert query
+    insert_query = """
+    INSERT INTO property_price (
+        DisplayAddress, GroupPhoneNumber, SizeStringMeters, GroupEmail, CreatedOnDate,
+        NumberOfBeds, PriceChangeIsIncrease, PropertyType, NumberOfBathrooms, PhotoCount,
+        Dublin_Info, PriceAsString
+    ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+    """
 
-    # # Iterate through DataFrame rows and insert into the table
-    # for index, row in df_final.iterrows():
-    #     data = (
-    #         row['DisplayAddress'], row['GroupPhoneNumber'], row['SizeStringMeters'],
-    #         row['GroupEmail'], row['CreatedOnDate'], row['NumberOfBeds'],
-    #         row['PriceChangeIsIncrease'],
-    #          row['PropertyType'], 
-    #         row['NumberOfBathrooms'],
-    #         row['PhotoCount'], row['Dublin_Info'], row['PriceAsString']
-    #     )
+    # Iterate through DataFrame rows and insert into the table
+    for index, row in df_final.iterrows():
+        data = (
+            row['DisplayAddress'], row['GroupPhoneNumber'], row['SizeStringMeters'],
+            row['GroupEmail'], row['CreatedOnDate'], row['NumberOfBeds'],
+            row['PriceChangeIsIncrease'], row['PropertyType'], row['NumberOfBathrooms'],
+            row['PhotoCount'], row['Dublin_Info'], row['PriceAsString']
+        )
 
         # cur.execute(insert_query, data)
     cur.execute('''SELECT * FROM property_price''') # execute an SQL statment
