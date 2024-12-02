@@ -201,7 +201,7 @@ def hello(): # Name of the method
         DisplayAddress, GroupPhoneNumber, SizeStringMeters, GroupEmail, CreatedOnDate,
         NumberOfBeds, PropertyType, NumberOfBathrooms, PhotoCount,
         Dublin_Info, PriceAsString
-    ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+    ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
     """
 
     # Iterate through DataFrame rows and insert into the table
