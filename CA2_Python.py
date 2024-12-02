@@ -6,6 +6,7 @@ import mysql.connector
 from flask import Flask, render_template, request, jsonify
 from flask_cors import CORS
 from logging.config import dictConfig
+import datetime
 
 # Data extraction from MyHome API
 url = 'https://api.myhome.ie/search'
@@ -222,7 +223,7 @@ def hello(): # Name of the method
             'GroupPhoneNumber': row[1],
             'SizeStringMeters': row[2],
             'GroupEmail': row[3],
-            'CreatedOnDate': row[4],
+            'CreatedOnDate': row[4].strftime('%Y-%m-%d') if isinstance(row[4], datetime.date) else row[4],
             'NumberOfBeds': row[5],
             'PriceChangeIsIncrease': row[6],
             'PropertyType': row[7],
