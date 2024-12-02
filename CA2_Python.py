@@ -158,7 +158,7 @@ df = df.loc[:, (missing_values <= 0.1)]
 # Select relevant columns
 columns_to_keep = [
     'DisplayAddress', 'GroupPhoneNumber', 'SizeStringMeters', 'GroupEmail', 'CreatedOnDate',
-    'NumberOfBeds', 'PropertyType', 'PriceChangeIsIncrease', 'NumberOfBathrooms',
+    'NumberOfBeds', 'PropertyType', 'NumberOfBathrooms',
     'PhotoCount', 'Dublin_Info', 'PriceAsString'
 ]
 df_final = df[columns_to_keep]
@@ -199,7 +199,7 @@ def hello(): # Name of the method
     insert_query = """
     INSERT INTO property_price (
         DisplayAddress, GroupPhoneNumber, SizeStringMeters, GroupEmail, CreatedOnDate,
-        NumberOfBeds, PriceChangeIsIncrease, PropertyType, NumberOfBathrooms, PhotoCount,
+        NumberOfBeds, PropertyType, NumberOfBathrooms, PhotoCount,
         Dublin_Info, PriceAsString
     ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
     """
@@ -209,7 +209,7 @@ def hello(): # Name of the method
         data = (
             row['DisplayAddress'], row['GroupPhoneNumber'], row['SizeStringMeters'],
             row['GroupEmail'], row['CreatedOnDate'], row['NumberOfBeds'],
-            row['PriceChangeIsIncrease'], row['PropertyType'], row['NumberOfBathrooms'],
+            row['PropertyType'], row['NumberOfBathrooms'],
             row['PhotoCount'], row['Dublin_Info'], row['PriceAsString']
         )
         cur.execute(insert_query, data)
@@ -225,12 +225,11 @@ def hello(): # Name of the method
             'GroupEmail': row[3],
             'CreatedOnDate': row[4].strftime('%Y-%m-%d') if isinstance(row[4], datetime.date) else row[4],
             'NumberOfBeds': row[5],
-            'PriceChangeIsIncrease': row[6],
-            'PropertyType': row[7],
-            'NumberOfBathrooms': row[8],
-            'PhotoCount': row[9],
-            'Dublin_Info': row[10],
-            'PriceAsString': row[11]
+            'PropertyType': row[6],
+            'NumberOfBathrooms': row[7],
+            'PhotoCount': row[8],
+            'Dublin_Info': row[9],
+            'PriceAsString': row[10]
         }
         Results.append(result)  # Append to Results with uppercase R
 
