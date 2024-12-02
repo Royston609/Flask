@@ -156,9 +156,9 @@ columns_to_keep = [
 ]
 df_final = df[columns_to_keep]
 
-# Convert 'CreatedOnDate' to string and clean it
-df_final['CreatedOnDate'] = df_final['CreatedOnDate'].astype(str)
-df_final['CreatedOnDate'] = df_final['CreatedOnDate'].apply(lambda x: x.split('T')[0] if 'T' in x else x)
+# Ensure you use .loc to modify 'CreatedOnDate' directly
+df_final.loc[:, 'CreatedOnDate'] = df_final['CreatedOnDate'].astype(str)
+df_final.loc[:, 'CreatedOnDate'] = df_final['CreatedOnDate'].apply(lambda x: x.split('T')[0] if 'T' in x else x)
 
 app = Flask(__name__)
 CORS(app)
