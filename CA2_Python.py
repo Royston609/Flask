@@ -198,7 +198,7 @@ def hello(): # Name of the method
     """
 
     # Iterate through DataFrame rows and insert into the table
-    for index, row in df.iterrows():
+    for index, row in df_final.iterrows():
         data = (
             row['DisplayAddress'], row['GroupPhoneNumber'], row['SizeStringMeters'],
             row['GroupEmail'], row['CreatedOnDate'], row['NumberOfBeds'],
