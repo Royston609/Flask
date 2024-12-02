@@ -185,7 +185,7 @@ dictConfig({
 app = Flask(__name__)
 CORS(app)
 
-@app.route("/get", methods=['GET']) #Default - Show Data
+@app.route("/") #Default - Show Data
 def hello(): # Name of the method
   cur = mysql.cursor() #create a connection to the SQL instance
   cursor.execute("SELECT * FROM property_price") # execute an SQL statment
