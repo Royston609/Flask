@@ -209,7 +209,7 @@ def hello(): # Name of the method
     #     )
 
         # cur.execute(insert_query, data)
-    ccur.execute('''SELECT * FROM property_price''') # execute an SQL statment
+    cur.execute('''SELECT * FROM property_price''') # execute an SQL statment
     rv = cur.fetchall() #Retreive all rows returend by the SQL statment
     Results=[]
     for row in rows:
