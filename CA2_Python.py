@@ -203,15 +203,15 @@ def hello(): # Name of the method
     ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
     """
 
-    # Iterate through DataFrame rows and insert into the table
-    # for index, row in df_final.iterrows():
-    #     data = (
-    #         row['DisplayAddress'], row['GroupPhoneNumber'], row['SizeStringMeters'],
-    #         row['GroupEmail'], row['CreatedOnDate'], row['NumberOfBeds'],
-    #         row['PriceChangeIsIncrease'], row['PropertyType'], row['NumberOfBathrooms'],
-    #         row['PhotoCount'], row['Dublin_Info'], row['PriceAsString']
-    #     )
-    #     cur.execute(insert_query, data)
+    Iterate through DataFrame rows and insert into the table
+    for index, row in df_final.iterrows():
+        data = (
+            row['DisplayAddress'], row['GroupPhoneNumber'], row['SizeStringMeters'],
+            row['GroupEmail'], row['CreatedOnDate'], row['NumberOfBeds'],
+            row['PriceChangeIsIncrease'], row['PropertyType'], row['NumberOfBathrooms'],
+            row['PhotoCount'], row['Dublin_Info'], row['PriceAsString']
+        )
+        cur.execute(insert_query, data)
 
     cur.execute('''SELECT * FROM property_price''')  # Execute an SQL statement
     rows = cur.fetchall()  # Retrieve all rows returned by the SQL statement
