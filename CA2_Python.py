@@ -193,7 +193,7 @@ CORS(app)
 
 @app.route("/")  # Get Property Data
 def hello(): # Name of the method
-    cur = mysql.cursor() #create a connection to the SQL instance
+    cur = mysql.cursor() # Create a connection to the SQL instance
     # Prepare the SQL Insert query
     insert_query = """
     INSERT INTO property_price (
@@ -204,18 +204,18 @@ def hello(): # Name of the method
     """
 
     # Iterate through DataFrame rows and insert into the table
-    for index, row in df_final.iterrows():
-        data = (
-            row['DisplayAddress'], row['GroupPhoneNumber'], row['SizeStringMeters'],
-            row['GroupEmail'], row['CreatedOnDate'], row['NumberOfBeds'],
-            row['PriceChangeIsIncrease'], row['PropertyType'], row['NumberOfBathrooms'],
-            row['PhotoCount'], row['Dublin_Info'], row['PriceAsString']
-        )
+    # for index, row in df_final.iterrows():
+    #     data = (
+    #         row['DisplayAddress'], row['GroupPhoneNumber'], row['SizeStringMeters'],
+    #         row['GroupEmail'], row['CreatedOnDate'], row['NumberOfBeds'],
+    #         row['PriceChangeIsIncrease'], row['PropertyType'], row['NumberOfBathrooms'],
+    #         row['PhotoCount'], row['Dublin_Info'], row['PriceAsString']
+    #     )
+    #     cur.execute(insert_query, data)
 
-        # cur.execute(insert_query, data)
-    cur.execute('''SELECT * FROM property_price''') # execute an SQL statment
-    rows = cur.fetchall() #Retreive all rows returend by the SQL statment
-    Results=[]
+    cur.execute('''SELECT * FROM property_price''')  # Execute an SQL statement
+    rows = cur.fetchall()  # Retrieve all rows returned by the SQL statement
+    Results = []  # Make sure to use this consistently with an uppercase R
     for row in rows:
         result = {
             'DisplayAddress': row[0],
@@ -231,16 +231,18 @@ def hello(): # Name of the method
             'Dublin_Info': row[10],
             'PriceAsString': row[11]
         }
-        results.append(result)
-    # response={'Results':result, 'count':len(result)}
-    response = {'Results': Results, 'count': len(Results)}
+        Results.append(result)  # Append to Results with uppercase R
 
-    ret=app.response_class(
+    # response={'Results': result, 'count': len(result)}  # Make sure to use Results instead of result here
+    response = {'Results': Results, 'count': len(Results)}  # Correctly reference Results here
+
+    ret = app.response_class(
         response=json.dumps(response),
         status=200,
         mimetype='application/json'
     )
-    return ret #Return the data in a string format
+    return ret  # Return the data in a string format
+
 if __name__ == "__main__":
     app.run(host='0.0.0.0',port='8080', ssl_context=('cert.pem', 'privkey.pem')) #Run the flask app at port 8080
 
