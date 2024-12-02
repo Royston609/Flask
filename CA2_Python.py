@@ -185,7 +185,7 @@ dictConfig({
 app = Flask(__name__)
 CORS(app)
 
-@app.route("/get", methods=['GET'])  # Get Property Data
+@app.route("/")  # Get Property Data
 def hello(): # Name of the method
     cur = mysql.cursor() #create a connection to the SQL instance
     # Prepare the SQL Insert query
