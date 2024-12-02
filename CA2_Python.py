@@ -186,53 +186,53 @@ app = Flask(__name__)
 CORS(app)
 
 @app.route("/") #Default - Show Data
-def hello(): # Name of the method
-  cur = mysql.cursor() #create a connection to the SQL instance
-   # Prepare the SQL Insert query
-        insert_query = """
-        INSERT INTO property_price (
-            DisplayAddress, GroupPhoneNumber, SizeStringMeters, GroupEmail, CreatedOnDate,
-            NumberOfBeds, PriceChangeIsIncrease, PropertyType, NumberOfBathrooms, PhotoCount,
-            Dublin_Info, PriceAsString
-        ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
-        """
+# def hello(): # Name of the method
+cur = mysql.cursor() #create a connection to the SQL instance
+# Prepare the SQL Insert query
+insert_query = """
+INSERT INTO property_price (
+    DisplayAddress, GroupPhoneNumber, SizeStringMeters, GroupEmail, CreatedOnDate,
+    NumberOfBeds, PriceChangeIsIncrease, PropertyType, NumberOfBathrooms, PhotoCount,
+    Dublin_Info, PriceAsString
+) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+"""
 
-        # Iterate through DataFrame rows and insert into the table
-        for index, row in df.iterrows():
-            data = (
-                row['DisplayAddress'], row['GroupPhoneNumber'], row['SizeStringMeters'],
-                row['GroupEmail'], row['CreatedOnDate'], row['NumberOfBeds'],
-                row['PriceChangeIsIncrease'], row['PropertyType'], row['NumberOfBathrooms'],
-                row['PhotoCount'], row['Dublin_Info'], row['PriceAsString']
-            )
+# Iterate through DataFrame rows and insert into the table
+for index, row in df.iterrows():
+    data = (
+        row['DisplayAddress'], row['GroupPhoneNumber'], row['SizeStringMeters'],
+        row['GroupEmail'], row['CreatedOnDate'], row['NumberOfBeds'],
+        row['PriceChangeIsIncrease'], row['PropertyType'], row['NumberOfBathrooms'],
+        row['PhotoCount'], row['Dublin_Info'], row['PriceAsString']
+    )
 
-            cur.execute(insert_query, data)
-  cur.execute("SELECT * FROM property_price") # execute an SQL statment
-  rv = cur.fetchall() #Retreive all rows returend by the SQL statment
-  Results=[]
-  for row in rows:
-            result = {
-                'DisplayAddress': row[0],
-                'GroupPhoneNumber': row[1],
-                'SizeStringMeters': row[2],
-                'GroupEmail': row[3],
-                'CreatedOnDate': row[4],
-                'NumberOfBeds': row[5],
-                'PriceChangeIsIncrease': row[6],
-                'PropertyType': row[7],
-                'NumberOfBathrooms': row[8],
-                'PhotoCount': row[9],
-                'Dublin_Info': row[10],
-                'PriceAsString': row[11]
-            }
-            results.append(result)
-  response={'Results':result, 'count':len(result)}
-  ret=app.response_class(
+    cur.execute(insert_query, data)
+cur.execute("SELECT * FROM property_price") # execute an SQL statment
+rv = cur.fetchall() #Retreive all rows returend by the SQL statment
+Results=[]
+for row in rows:
+    result = {
+        'DisplayAddress': row[0],
+        'GroupPhoneNumber': row[1],
+        'SizeStringMeters': row[2],
+        'GroupEmail': row[3],
+        'CreatedOnDate': row[4],
+        'NumberOfBeds': row[5],
+        'PriceChangeIsIncrease': row[6],
+        'PropertyType': row[7],
+        'NumberOfBathrooms': row[8],
+        'PhotoCount': row[9],
+        'Dublin_Info': row[10],
+        'PriceAsString': row[11]
+    }
+    results.append(result)
+response={'Results':result, 'count':len(result)}
+ret=app.response_class(
     response=json.dumps(response),
     status=200,
     mimetype='application/json'
-  )
-  return ret #Return the data in a string format
+)
+# return ret #Return the data in a string format
 if __name__ == "__main__":
   app.run(host='0.0.0.0',port='8080', ssl_context=('cert.pem', 'privkey.pem')) #Run the flask app at port 8080
 
