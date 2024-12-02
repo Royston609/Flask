@@ -232,7 +232,9 @@ def hello(): # Name of the method
             'PriceAsString': row[11]
         }
         results.append(result)
-    response={'Results':result, 'count':len(result)}
+    # response={'Results':result, 'count':len(result)}
+    response = {'Results': Results, 'count': len(Results)}
+
     ret=app.response_class(
         response=json.dumps(response),
         status=200,
