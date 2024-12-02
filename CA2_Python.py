@@ -160,6 +160,28 @@ df_final = df[columns_to_keep]
 df_final.loc[:, 'CreatedOnDate'] = df_final['CreatedOnDate'].astype(str)
 df_final.loc[:, 'CreatedOnDate'] = df_final['CreatedOnDate'].apply(lambda x: x.split('T')[0] if 'T' in x else x)
 
+mysql = mysql.connector.connect(user='web', password='webPass',
+  host='127.0.0.1',
+  database='student')
+
+from logging.config import dictConfig
+
+dictConfig({
+    'version': 1,
+    'formatters': {'default': {
+        'format': '[%(asctime)s] %(levelname)s in %(module)s: %(message)s',
+    }},
+    'handlers': {'wsgi': {
+        'class': 'logging.StreamHandler',
+        'stream': 'ext://flask.logging.wsgi_errors_stream',
+        'formatter': 'default'
+    }},
+    'root': {
+        'level': 'INFO',
+        'handlers': ['wsgi']
+    }
+})
+
 app = Flask(__name__)
 CORS(app)
 
@@ -195,53 +217,3 @@ def hello(): # Name of the method
 if __name__ == "__main__":
   app.run(host='0.0.0.0',port='8080', ssl_context=('cert.pem', 'privkey.pem')) #Run the flask app at port 8080
 
-# def get_property_data():
-#     try:
-#         cursor.execute("SELECT * FROM property_price")
-#         rows = cursor.fetchall()
-#         if not rows:
-#             return jsonify({"message": "No data found in the database"}), 404
-        
-#         results = []
-#         for row in rows:
-#             result = {
-#                 'DisplayAddress': row[0],
-#                 'GroupPhoneNumber': row[1],
-#                 'SizeStringMeters': row[2],
-#                 'GroupEmail': row[3],
-#                 'CreatedOnDate': row[4],
-#                 'NumberOfBeds': row[5],
-#                 'PriceChangeIsIncrease': row[6],
-#                 'PropertyType': row[7],
-#                 'NumberOfBathrooms': row[8],
-#                 'PhotoCount': row[9],
-#                 'Dublin_Info': row[10],
-#                 'PriceAsString': row[11]
-#             }
-#             results.append(result)
-        
-#         # Insert the fetched data into a new table if required
-#         cursor.executemany('''INSERT INTO property_price_inserted (
-#             DisplayAddress, GroupPhoneNumber, SizeStringMeters, GroupEmail, CreatedOnDate,
-#             NumberOfBeds, PriceChangeIsIncrease, PropertyType, NumberOfBathrooms,
-#             PhotoCount, Dublin_Info, PriceAsString
-#         ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''', [
-#             (result['DisplayAddress'], result['GroupPhoneNumber'], result['SizeStringMeters'], result['GroupEmail'], 
-#             result['CreatedOnDate'], result['NumberOfBeds'], result['PriceChangeIsIncrease'], result['PropertyType'], 
-#             result['NumberOfBathrooms'], result['PhotoCount'], result['Dublin_Info'], result['PriceAsString'])
-#             for result in results
-#         ])
-#         conn.commit()
-
-#         return jsonify({"Results": results, "count": len(results)}), 200
-
-#     except mysql.connector.Error as err:
-#         app.logger.error(f"MySQL Error: {err}")
-#         return jsonify({"message": "Database error", "error": str(err)}), 500
-
-#     except Exception as e:
-#         app.logger.error(f"Error: {e}")
-#         return jsonify({"message": "Internal server error", "error": str(e)}), 500
-
-# if __name__ == "__main__":
-#     app.run(debug=True, ssl_context=('cert.pem', 'privkey.pem'))  # Use SSL certificates for secure connections
